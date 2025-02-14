@@ -55,7 +55,7 @@
 
 - TECH STACK  
   1. Frontend: React.js  
-  The frontend will be built using React.js to provide a dynamic and responsive user interface. React Context API will manage global state, while Fetch API will handle API requests, with Axios as a potential alternative for improved request handling. React Toastify will be integrated to display notifications, while styling will be managed using Tailwind CSS, possibly Bootstrap, and CSS, to create a visually appealing and striking design.
+  The frontend will be built using React.js to provide a dynamic and responsive user interface. React Context API will manage global state, while Fetch API will handle API requests, with Axios as a potential alternative for improved request handling. React Toastify will be integrated to display notifications, while styling will be managed using Tailwind CSS, possibly Material Tailwind, and CSS, to create a visually appealing and striking design.
 
   1. Backend: Node.js & Express.js  
   The backend will be developed using Node.js and Express.js, with Node providing the runtime environment for executing backend logic and managing dependencies using npm. The Express.js framework will handle HTTP requests, define API routes, manage middleware, and interact with the database.
@@ -203,15 +203,13 @@ If the order is successfully created, the Order Controller sends a response with
 
 
 ## R3. Application Architecture Diagram
-For my application, Leanne's Collection, I plan to follow a 3-tier monolithic architecture, represented in the diagram below by the three distinct layers: frontend (client tier), backend (server tier), and database (data tier). Since this application is built using the MERN stack, the following technologies will be used:
+For my application, Leanne's Collection, I plan to follow a 3-tier architecture, represented in the diagram below by the three distinct layers: frontend (client tier), backend (server tier), and database (data tier). Since this application is built using the MERN stack, the following technologies will be used:
 
 The frontend (client tier) will be built with React.js and deployed on Netlify, providing a responsive and intuitive interface for customers to browse face paint kits, watch tutorials, and complete purchases as guests. The seller (admin) will have access to a separate admin portal, where they can log in to view all customer orders.  
 
 The backend (server tier) will be developed with Node.js and Express.js, hosted on Render. It will handle all API requests and business logic, which will be managed inside the application's controllers. These controllers will process incoming HTTP requests, validate data, interact with the database using Mongoose, enforce security using JWT authentication for the admin, and send structured JSON responses back to the frontend. This ensures the frontend can efficiently display product listings, order details, and video tutorials.
 
 The database (data tier) will be powered by MongoDB Atlas (hosted on AWS), storing all product (kit) details, customer orders, and video information. Data will be structured and managed using Mongoose models, ensuring consistency, validation, and efficient querying.
-
-While this monolithic setup is not as scalable as a microservices approach, it is the best choice for this project given the scope of this assignment and my current development skills.
 
 **Side note**: In the future, when I launch Leanne's Collection as a fully functional eCommerce website, I plan to integrate Shopify APIs (such as the Admin API) to handle cart creation, checkout, and payments. For this assignment, I will build proxies to simulate this functionality. Offloading payments and order management to Shopify will improve scalability by reducing backend processing. Therefore, the diagram below reflects the current architecture for this assignment and not the future version that will incorporate third-party Shopify APIs.
 
@@ -358,9 +356,34 @@ USER STORIES FOR BUSINESS OWNER
 ## R6. Screenshots of your Trello (or similar kanban system) board throughout the duration of the project
 
 ### Link to my Kanban style Trello board
-[Trello Board]([./docs/owner-persona.png](https://trello.com/b/4fwy8Nat/leannes-collection-web-app))
+[Trello Board](https://trello.com/b/4fwy8Nat/leannes-collection-web-app)
 
 ### Screenshots of my Kanban style Trello board
+
+1. MY TRELLO KANBAN BOARD SCREENSHOT  
+
+![My Trello Kanban Board](./docs/my-trello-board.png)
+
+2. DESIGN TRELLO CARDS SCREENSHOT  
+
+![Design Trello Cards](./docs/design-trello-cards.png)  
+
+3. BACKEND TRELLO CARDS SCREENSHOT  
+
+![Backend Trello Cards](./docs/backend-trello-cards.png)  
+
+4. FRONTEND TRELLO CARDS SCREENSHOTS  
+
+![Frontend Trello Cards](./docs/frontend-trello-cards.png)  
+![Frontend Continued Trello Cards](./docs/frontend-cont-trello-cards.png)
+
+5. TESTING & DEPLOYMENT TRELLO CARDS SCREENSHOT  
+
+![Testing & Deployment Trello Cards](./docs/testing-deploy-trello-cards.png)  
+
+6. BACKLOG TRELLO CARDS SCREENSHOT (Future features to be completed after assignment for real website launch) 
+
+![Backlog Trello Cards](./docs/backlog-trello-cards.png)
 
 
 
