@@ -351,7 +351,13 @@ USER STORIES FOR BUSINESS OWNER
 ![Seller Orders Dashboard Page](./docs/orders-dashboard-wireframes.png)
 
 11.  Seller Single Order Page  
-![Seller Single Order Page](./docs/single-order-wireframes.png)
+![Seller Single Order Page](./docs/single-order-wireframes.png)  
+
+12.  Style Guide  
+![Style Guide 1](./docs/style-guide-one.png)  
+![Style Guide 2](./docs/style-guide-two.png)  
+![Style Guide 3](./docs/style-guide-three.png)  
+![Style Guide 4](./docs/style-guide-four.png)
 
 ## R6. Screenshots of your Trello (or similar kanban system) board throughout the duration of the project
 
