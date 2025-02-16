@@ -77,128 +77,144 @@
 
 ## R2. Dataflow Diagram
 
+### Dataflow Diagram (DFD) Legend
+
+![Legend For Dataflow Diagram](./docs/dfd-legend.png)  
+
+### Dataflow Diagram Legend - Explained  
+- **Entity** (Rectangle): represents users or external systems interacting within my application.  
+- **Process** (Rounded Rectangle): shows how data is processed, such as; handling a request or updating an order.
+- **Data Store** (Open Rectangle): is where information is stored, such as products, orders, or user (seller - admin) details in the database.  
+- **Data Flow** (Arrow): represents how data moves between different parts of the application.  
+- **Error Response** (Red Text): illustrates an error, that is; when something goes wrong, like a failed order creation or login request.
+
+  
+1. Customer Browsing Product/s Dataflow Diagram  
 ![Customer Browsing Product/s Dataflow Diagram](./docs/customer-browsing-dataflow.png)
 
-### Customer Browsing Product/s Dataflow Diagram - Explained
+### Customer Browsing Product/s Dataflow Diagram - Explained  
+
+- Customer Navigates to the Shop Page
+The customer opens their web browser and navigates to the Shop Page the website, initiating the process of browsing products. This action triggers the frontend to request product data from the backend.
 
 - Customer Sends a GET Request  
-The customer uses the web browser (client) to send a GET request to the server to retrieve product information. This request is sent via an API endpoint such as /api/products to fetch all available face paint kits or /api/products/:id to retrieve details about a specific product. The web client initiates this request whenever a customer visits the Shop Page to display all products or clicks on a specific item to view its details.
+Once on the Shop Page, the web browser (client) automatically sends a GET request to the server to retrieve product information. This request is made through an API endpoint such as `/api/products` to fetch all available face paint kits, or `/api/products/:id` to retrieve details about a specific product. The request is initiated whenever a customer visits the Shop Page or selects a specific product for more details.
 
 - Product Controller Receives the Request  
 The server receives the GET request and processes it through the Product Controller. The controller determines whether the request is for all products or a specific product based on the API endpoint. It then calls the appropriate function (`getProducts()` or `getProduct(id)`) to retrieve the required data.  
 
 - Product Controller Queries the Database  
-The Product Controller queries the Products Collection in the database. If the request is for all products, it executes the `getProducts()` function to retrieve the full list of available kits. If the request is for a specific product, it calls the `getProduct(id)` function, using the provided product ID to fetch the corresponding product details. The query ensures that the appropriate data is retrieved based on the request type.  
+The Product Controller queries the Products Collection in the database. If the request is for all products, it executes the `getProducts()` function to retrieve the full list of available kits. If the request is for a specific product, it calls the `getProduct(id)` function, using the provided product ID to fetch the corresponding product details.
 
 - Database (Products Collection) Returns Data  
 The database processes the query and returns the relevant data to the Product Controller. If the request was for all available products, it returns a JSON array containing all products. If the request included a specific product ID, it returns a JSON object with the details of that product. This ensures that the correct product information is retrieved and sent back to the controller for further processing.
 
 - Product Controller Sends a Response to the Client
-The Product Controller formats the retrieved data into a structured JSON response using express.json(), ensuring it is properly structured for the frontend. It then sends the response back to the client (browser). If the query was successful, the server returns a `200 OK` status code along with either an array of all products or a single product object, depending on the request. This allows the frontend to display the relevant product information accordingly.
+The Product Controller formats the retrieved data into a structured JSON response using express.json() and sends it back to the web browser (client). If the request is successful, the response includes a 200 OK status and the requested product data. The frontend then processes this data and updates the Shop Page accordingly, displaying all products or the selected product’s details.  
+
+- Product Data Displayed to the Customer  
+Once the browser receives the product data, it dynamically updates the Shop Page to display the available products or the details of a selected product. The customer can now browse products, and/or view product descriptions.
 
 - Error Handling in Product Retrieval  
-If an issue occurs during the database query, such as an invalid product ID or a database connection error, the Product Controller catches the error. It then sends an appropriate error response to the client, typically returning a 500 Internal Server Error status along with a message indicating the failure to retrieve the product data. This ensures that the frontend is informed of the issue and can handle it accordingly.
+If an error occurs during the request (eg; an invalid product ID or database connection failure), the Product Controller catches the error and sends an error response back to the client. This response typically includes a 500 Internal Server Error status along with an error message. The frontend then displays an error message to the customer, informing them that the product data could not be retrieved.  
 
+1. Seller Login Dataflow Diagram  
 ![Seller Login Dataflow Diagram](./docs/seller-login-dataflow.png)  
 
 ### Seller Login Dataflow Diagram - Explained  
 
+- Seller Navigates to the Login Page  
+The seller (admin) opens their web browser and navigates to the login portal. This page contains a form where they enter their email and password to gain access to the admin dashboard.
+
 - Seller Sends a POST Request  
-When the seller (admin) accesses their dedicated login portal page to manage the website, they enter their email and password into the login form there and submit it. This action triggers a POST request from the web browser (client) to the server, specifically targeting the API endpoint `/api/seller/login`. The request carries the seller's credentials in the request body and is routed to the Seller Controller, which processes the login request.
+When the seller submits their login details, the web browser (client) sends a POST request to the server via the API endpoint `/api/seller/login`. This request contains the seller’s email and password in the request body. The request is then routed to the Seller Controller, which is responsible for processing the login attempt.
 
 - Seller Controller Receives the Request  
 The Seller Controller receives the POST request and processes the submitted login details (email & password). It extracts these credentials from the request body and calls the `verifySeller()` function, which is responsible for validating the provided details against the stored admin credentials stored in the database.
 
 - Seller Controller Queries the Database  
-The Seller Controller uses the `verifySeller()` function to query the database, specifically searching the Sellers Collection for a document that matches the provided email. If a matching seller account is found, the stored hashed password is retrieved and compared to the submitted password using bcrypt. If the credentials are valid, the seller is successfully logged in. If the email or password is incorrect, an error response is sent, and access is prevented.
+The `verifySeller()` function queries the database (Sellers Collection) to check for a seller account with the provided email. If a matching email is found, the system retrieves the stored hashed password for comparison using bcrypt. If the credentials match, the seller is authenticated. If the email does not exist or the password is incorrect, an error response is sent back to the client, denying access.
 
 - Database (Sellers Collection) Returns Data  
-If the login details submitted are correct, the database confirms the seller’s identity and returns their details to the Seller Controller. This response includes the seller's ID and email, which are used to generate a JWT token for authenticating and authorising the seller when accessing protected endpoints on the platform.
+If the login details submitted are correct, the database confirms the seller’s identity and returns relevant details, such as the seller's ID and email, to the Seller Controller. These details are used to generate a JWT token, which will be required for authentication when accessing protected parts (routes) of the website.
 
 - Seller Controller Generates a JWT
-The Seller Controller generates a JWT (JSON Web Token) using the seller’s ID, email, and a timestamp. The token also has an expiration time to ensure security. This token allows the seller to stay logged in and access protected parts of the website, like viewing orders.
+The Seller Controller generates a JSON Web Token (JWT) using the seller’s ID and email. The token is configured with an expiration time for security. This token will be sent back to the client, allowing the seller to remain authenticated for the session and to access admin-only routes.
 
 - Seller Controller Sends a Response to the Client 
-If the login is successful, the Seller Controller sends back a JWT token with a `200 OK` status, allowing the seller to stay logged in and access protected routes of the site. If the login fails because the email or password was incorrect, the Seller Controller then returns a `401 Unauthorized` error, letting the seller know their login attempt failed.  
+If the login is successful, the Seller Controller sends back a JWT token along with a 200 OK status, enabling the seller to access the admin dashboard. The frontend then stores the token and redirects the seller to their dashboard. If the login attempt fails due to incorrect credentials, the Seller Controller sends a 401 Unauthorised response, and the frontend displays an error message to the user (Seller) informing them of the failed login attempt.     
 
+1. Seller Viewing Orders Dataflow Diagram  
 ![Seller Viewing Orders Dataflow Diagram](./docs/seller-orders-dataflow.png)  
 
 ### Seller Viewing Orders Dataflow Diagram - Explained  
 
+- Seller Navigates to the Orders Page  
+The seller (admin) logs into their dashboard and navigates to the Orders Page. This page allows them to view all customer orders at a glance, with order numbers, statuses, total prices, dates, and customer names. They can also click on an order number to view more details about a specific order.
+
 - Seller Sends a GET Request  
-The seller uses the web browser (client) to send a GET request to the server to retrieve order information. This request is sent via an API endpoint such as `/api/orders` to fetch all customer orders or `/api/orders/:id` to retrieve details about a specific order. The web client initiates this request whenever the seller accesses the Orders Page in their dashboard to view all orders or clicks on a specific order number to see its full details.
+When the seller accesses the Orders Page, the browser (client) sends a GET request to the server to retrieve the order data. This request is sent via the API endpoint `/api/orders` to fetch all orders or `/api/orders/:id` to retrieve a single order's details. The request is initiated automatically when the Orders Page loads or when the seller clicks on a specific order number.
 
 -  Order Controller Receives the Request  
-The Order Controller receives the GET request and processes it accordingly. If the request is for all orders, it calls the `getOrders()` function to retrieve all existing orders from the Orders Collection in the database. If the request is for a specific order, it calls the `getOrderById(id)` function to retrieve details for that particular order.
+The Order Controller receives the GET request and determines whether to fetch all orders or a single order based on the API endpoint. If the request is for all orders, it calls the `getOrders()` function. If the request is for a specific order, it calls the `getOrderById(id)` function, passing the requested order ID.
 
 - Order Controller Queries the Database  
-The Order Controller, through the `getOrders()` function, queries the Orders Collection in the database. The database processes this query and returns all stored order records, including order numbers, statuses, total prices, and customer names. If a specific order is requested, the controller calls `getOrderById(id)`, and the database responds with the corresponding order details, including the customer's shipping information and a breakdown of the ordered products, their quantities, and individual prices.
+The `getOrders()` function queries the database (Orders Collection) to retrieve all stored order records, including order numbers, statuses, total prices, dates, and customer names. If a specific order is requested, the `getOrderById(id)` function filters the query to return only the details of that particular order, including shipping details, the ordered products, their quantities, and individual prices.
 
 - Database (Orders Collection) Returns Data  
-The database processes the query and responds to the Order Controller with the requested order data. For all orders, it returns a JSON array containing order records with just the essential details. For a specific order, it returns a JSON object with the complete order information, including the customer's shipping details and a detailed breakdown of their purchased items.
+The database processes the request and sends back the relevant data to the Order Controller. If the request is for all orders, it returns a JSON array with all stored orders and their basic details. If the request is for a single order, it returns a JSON object containing the full details of that order, including the customer's shipping information and order summary.
 
 - Seller Controller Sends a Response to the Client 
-If the request is successful, the Order Controller formats the retrieved data using express.json() and sends it back to the Seller (Client) with a `200 OK` status code. The response contains either a list of all customer orders or details of a specific order, depending on the request. If the query fails (eg; due to a database connection issue), the Order Controller returns a 500 Internal Server Error response, along with an error message indicating the failure.  
+If the request is successful, the Order Controller formats the retrieved order data using express.json() and sends it back to the client with a 200 OK status. The response contains either a list of all orders or a detailed view of a specific order. If the request fails due to a database error or invalid query, the Order Controller returns a 500 Internal Server Error, and the frontend displays an error message to the user (Seller), informing them that the order data could not be retrieved. 
 
-![Customer Browsing Video Tutorials Dataflow Diagram](./docs/customer-tutorials-dataflow.png)  
+1. Customer Browsing/Watching Video Tutorials Dataflow Diagram
+![Customer Browsing/Watching Video Tutorials Dataflow Diagram](./docs/customer-tutorials-dataflow.png)  
 
 ### Customer Browsing Video Tutorials Dataflow Diagram - Explained  
 
+- Customer Navigates to the Tutorials Page  
+The Tutorials Controller receives the GET request and processes it. It calls the `getTutorials()` function, which is responsible for retrieving all stored video tutorials (URLs) from the database (Tutorials Collection).  
+
 - Customer Sends a GET Request  
-The customer uses the web browser (client) to send a GET request to retrieve all available face paint video tutorials from the website. This request is sent via the API endpoint `/api/tutorials`. The request is initiated when the customer navigates to the "Tutorials" page, prompting the server to fetch and return the list of video tutorials stored in the database.
+When the customer lands on the Tutorials page, the browser (client) automatically sends a GET request to retrieve the available video tutorials. This request is sent to the server via the API endpoint `/api/tutorials`. The request prompts the server to fetch and return the list of video tutorials (URLs) stored in the database.
 
 -  Tutorials Controller Receives the Request  
 The Tutorials Controller receives the GET request and processes it. It calls the `getTutorials()` function, which is responsible for retrieving the list of stored video tutorials from the database (Tutorials Collection).
 
 - Tutorials Controller Queries the Database  
-The Tutorials Controller uses the `getTutorials()` function to query the Tutorials Collection in the database. This query retrieves all video tutorial records (documents), which store the video information, including YouTube URLs, and video titles.
+The `getTutorials()` function queries the database (Tutorials Collection) to retrieve all the stored video tutorial records. Each record contains metadata such as the video title and a YouTube URL, which will be used to embed the video on the website.
 
 - Database (Tutorials Collection) Returns Data  
-The database processes the query and sends the result back to the Tutorials Controller. The response is returned as a JSON array, containing all stored video tutorials with relevant details such as; the video title, and YouTube URL.
+The database processes the query and responds with a JSON array containing the list of video tutorials, including their titles and YouTube URLs. If an error occurs (eg; a failed database connection), an error response is sent back to the controller instead.
 
 - Tutorials Controller Sends a Response to the Client 
-If the request is successful, the Tutorials Controller formats the retrieved data using express.json() and sends it to the client with a `200 OK` status code. The frontend then embeds the videos using iframes, allowing customers to watch them directly on the website. If the query fails (eg; invalid database connection or query issue), the Tutorials Controller sends a 500 Internal Server Error response to the customer with an error message indicating the failure.   
+If the request is successful, the Tutorials Controller formats the retrieved data using express.json() and sends it to the client with a 200 OK status code. The frontend uses the returned video URLs to embed the videos using iframes, allowing customers to watch them directly on the website. If the query fails due to a database issue, the Tutorials Controller returns a 500 Internal Server Error response, and the website displays an error message, informing the user (customer) that the videos could not be retrieved.  
 
-![Customer Managing Cart (Add/Update/Delete) Dataflow Diagram](./docs/customer-cart-dataflow.png)  
+- Customer Selects and Watches a Video  
+Once the video tutorials are displayed, the customer can click on a video to watch it. The browser fetches the video from YouTube via its URL, and YouTube streams the video directly to the client. If the video cannot load, an error message is displayed, preventing the video from being played.
 
-### Customer Managing Cart (Add/Update/Delete) Dataflow Diagram - Explained  
+1. Customer Updating Cart & Checking Out Order Dataflow Diagram
+![Customer Updating & Checking Out Order Dataflow Diagram](./docs/customer-checkout-dataflow.png)  
 
-- Customer Sends a GET/POST/PATCH/DELETE Request  
-The customer interacts with the shopping cart through the web browser (client), sending different requests depending on their actions. When a customer visits the Shopping Cart Page, a GET request is sent to `/api/cart` to retrieve and display the current items in their cart. If they decide to add a product to their cart, they can do so either from the Shop Page or the Product Details Page, which triggers a POST request to `/api/cart` with that products details. If they wish to update the quantity of an item (eg; changing from 1 to 2), a PATCH request is sent to `/api/cart/:id` with the updated quantity. Similarly, if they decide to remove an item (eg; setting the quantity to 0), a DELETE request is sent to `/api/cart/:id`, ensuring the product is removed before proceeding to checkout.
+### Customer Updating Cart & Checking Out Order Dataflow Diagram - Explained  
 
--  Cart Controller Receives the Request  
-The Cart Controller receives the request from the client and determines what operation is being performed based on the HTTP method (GET, POST, PATCH, or DELETE). If the request is a GET request, it calls the `getCart()` function to retrieve the customer's current cart. If the request is a POST request, it calls the `addToCart()` function to add a product to the cart. If the request is a PATCH request, it calls the `updateCart(id)` function to modify the quantity of a product in the cart. Lastly, if the request is a DELETE request, it calls the `deleteFromCart(id)` function to remove a product from the cart based on its ID.
-
-- Cart Controller Queries the Database 
-The Cart Controller then queries the database (Carts Collection) to carry out the requested operation. If the request is a GET request, the controller retrieves the customer's cart details from the database. If the request is a POST request, the controller inserts the new product into the customer's cart. If the request is a PATCH request, it modifies the quantity of a specific product in the cart. If the request is a DELETE request, the controller removes the specified product from the cart.
-
-- Database (Carts Collection) Returns Data 
-Once the query is processed, the database sends a response back to the Cart Controller. If the request was a GET, the database returns the cart details, including all products currently in the cart. If the request was a POST, the database confirms that the new product has been added. If the request was a PATCH, the database confirms that the quantity of the specified product has been updated. If the request was a DELETE, the database confirms that the product has been successfully removed from the cart. If an error occurs, such as an invalid product ID or a database connection failure, an error message is sent back to the Cart Controller.
-
-- Cart Controller Sends a Response to the Client 
-The Cart Controller processes the response received from the database and formats it using express.json(). If the operation was successful, the controller sends a `200 OK` status response back to the customer. For a GET request, the response contains the cart details. For a POST, PATCH, or DELETE request, the response contains a confirmation message such as "Product added to cart", "Cart updated successfully", or "Product removed from cart". If an error occurred, the Cart Controller sends an appropriate error response. A 400 Bad Request response is sent if the request contained invalid inputs, such as an incorrect product ID. A 500 Internal Server Error response is sent if a database issue prevented the operation from being completed successfully. 
-
-![Customer Checking Out Order Dataflow Diagram](./docs/customer-checkout-dataflow.png)  
-
-### Customer Checking Out Order Dataflow Diagram - Explained  
+- Cart is Updated in the Local Browser  
+As the customer shops, their selected products are stored in the frontend, either in React state or local storage. When they add, update, or remove items from the cart, these changes are reflected instantly on the website without requiring a request to the backend. The cart remains stored on the frontend until the customer proceeds to checkout.  
 
 - Customer Sends a POST Request  
-When the customer proceeds to checkout, they are redirected to the checkout page, where they enter their name and shipping address into a form. Their cart items are displayed on this page. Once they complete the form and press the "Submit Payment" button, a POST request is sent to the server via the API endpoint `/api/orders`. This request includes the customer’s name, shipping address, and the cart details (an array containing product IDs, quantities, & prices). The request will only be processed if all required fields are filled out.
+When the customer proceeds to checkout, they are redirected to the checkout page, where their cart items are displayed alongside a form to enter their name and shipping address. Once they complete the form and press the "Submit Payment" button, a POST request is sent to the server via the API endpoint `/api/orders`. This request includes the customer’s name, shipping address, and cart details (an array containing product IDs, quantities, and prices). The request is only processed if all required fields in the form are filled out.
 
 -  Order Controller Receives the Request  
-The Order Controller receives the POST request and begins processing the order. Since the order needs to include the most up-to-date cart details, the controller sends a request to the Cart Controller to retrieve the customer’s cart data.
-
-- Cart Controller Retrieves Cart Data  
-The Cart Controller processes the request by querying the database (Carts Collection) to fetch the customer’s cart. The database returns the list of products in the cart along with their quantities. If the cart retrieval is unsuccessful due to an empty cart or a database error, an error response is sent back, preventing the order from being created.
+The Order Controller receives the POST request and begins processing the order. Since the cart data is managed on the frontend, the controller processes the cart details directly from the request body. It verifies that the provided cart details, customer information, and shipping address are valid. If any required fields are missing or if the cart data is invalid (eg; no items are in the cart), an error will be returned, preventing order creation.
 
 - Order Controller Creates the Order  
-If the cart retrieval is successful, the Order Controller processes the order by calling the `createOrder()` function. This function generates a new order record (document) in the database (Orders Collection), which includes the customer’s name, shipping details, the list of ordered products, their quantities, the total price of the order, and a unique order number.
+If the request is valid, the Order Controller calls the `createOrder()` function, which generates a new order record in the database (Orders Collection). The order record includes the customer's name, shipping details, a list of ordered products with their quantities and prices, the total order price, and a unique order number.
 
 - Database Returns Data to the Order Controller
-The database (Orders Collection) processes the request and stores the new order. If the order creation is successful, the database sends back a confirmation message along with the newly created order number. If there is a database error, the system returns an error message instead.
+The database (Orders Collection) processes the request and stores the new order. If the order creation is successful, the database confirms the order has been stored and returns a success message along with the newly generated order number. If there is a database error, an error message will be returned instead.
 
 - Order Controller Sends a Response to the Client 
-If the order is successfully created, the Order Controller sends a response with a 201 Created status. The response includes a confirmation message informing the customer that their order was successful, along with the order number and shipping details. The checkout page updates to display this confirmation. If an error occurs at any stage, the Order Controller sends a 400 Bad Request response with an error message, and the checkout page informs the customer that the order could not be processed. 
+If the order is successfully created, the Order Controller sends a response with a 201 Created status. The response includes a confirmation message informing the customer that their order was successful, along with the order number and shipping details. The checkout page updates to display this confirmation. If an error occurs at any stage, the Order Controller sends a 400 Bad Request response with an error message, and the checkout page informs the customer that the order could not be processed.
 
 
 
