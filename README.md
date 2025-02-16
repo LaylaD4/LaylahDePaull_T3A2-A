@@ -94,8 +94,8 @@
 
 ### Customer Browsing Product/s Dataflow Diagram - Explained  
 
-- Customer Navigates to the Shop Page
-The customer opens their web browser and navigates to the Shop Page the website, initiating the process of browsing products. This action triggers the frontend to request product data from the backend.
+- Customer Navigates to the Shop Page  
+The customer opens their web browser and navigates to the Shop Page of the website, initiating the process of browsing products. This action triggers the frontend to request product data from the backend.
 
 - Customer Sends a GET Request  
 Once on the Shop Page, the web browser (client) automatically sends a GET request to the server to retrieve product information. This request is made through an API endpoint such as `/api/products` to fetch all available face paint kits, or `/api/products/:id` to retrieve details about a specific product. The request is initiated whenever a customer visits the Shop Page or selects a specific product for more details.
@@ -109,11 +109,11 @@ The Product Controller queries the Products Collection in the database. If the r
 - Database (Products Collection) Returns Data  
 The database processes the query and returns the relevant data to the Product Controller. If the request was for all available products, it returns a JSON array containing all products. If the request included a specific product ID, it returns a JSON object with the details of that product. This ensures that the correct product information is retrieved and sent back to the controller for further processing.
 
-- Product Controller Sends a Response to the Client
+- Product Controller Sends a Response to the Client  
 The Product Controller formats the retrieved data into a structured JSON response using express.json() and sends it back to the web browser (client). If the request is successful, the response includes a 200 OK status and the requested product data. The frontend then processes this data and updates the Shop Page accordingly, displaying all products or the selected product’s details.  
 
 - Product Data Displayed to the Customer  
-Once the browser receives the product data, it dynamically updates the Shop Page to display the available products or the details of a selected product. The customer can now browse products, and/or view product descriptions.
+Once the browser receives the product data, it dynamically updates the Shop Page to display the available products or the details of a selected product. The customer can now browse products, and/or view the product's description.
 
 - Error Handling in Product Retrieval  
 If an error occurs during the request (eg; an invalid product ID or database connection failure), the Product Controller catches the error and sends an error response back to the client. This response typically includes a 500 Internal Server Error status along with an error message. The frontend then displays an error message to the customer, informing them that the product data could not be retrieved.  
@@ -138,10 +138,10 @@ The `verifySeller()` function queries the database (Sellers Collection) to check
 - Database (Sellers Collection) Returns Data  
 If the login details submitted are correct, the database confirms the seller’s identity and returns relevant details, such as the seller's ID and email, to the Seller Controller. These details are used to generate a JWT token, which will be required for authentication when accessing protected parts (routes) of the website.
 
-- Seller Controller Generates a JWT
+- Seller Controller Generates a JWT  
 The Seller Controller generates a JSON Web Token (JWT) using the seller’s ID and email. The token is configured with an expiration time for security. This token will be sent back to the client, allowing the seller to remain authenticated for the session and to access admin-only routes.
 
-- Seller Controller Sends a Response to the Client 
+- Seller Controller Sends a Response to the Client   
 If the login is successful, the Seller Controller sends back a JWT token along with a 200 OK status, enabling the seller to access the admin dashboard. The frontend then stores the token and redirects the seller to their dashboard. If the login attempt fails due to incorrect credentials, the Seller Controller sends a 401 Unauthorised response, and the frontend displays an error message to the user (Seller) informing them of the failed login attempt.     
 
 3. Seller Viewing Orders Dataflow Diagram  
@@ -164,19 +164,19 @@ The `getOrders()` function queries the database (Orders Collection) to retrieve 
 - Database (Orders Collection) Returns Data  
 The database processes the request and sends back the relevant data to the Order Controller. If the request is for all orders, it returns a JSON array with all stored orders and their basic details. If the request is for a single order, it returns a JSON object containing the full details of that order, including the customer's shipping information and order summary.
 
-- Seller Controller Sends a Response to the Client 
+- Seller Controller Sends a Response to the Client   
 If the request is successful, the Order Controller formats the retrieved order data using express.json() and sends it back to the client with a 200 OK status. The response contains either a list of all orders or a detailed view of a specific order. If the request fails due to a database error or invalid query, the Order Controller returns a 500 Internal Server Error, and the frontend displays an error message to the user (Seller), informing them that the order data could not be retrieved. 
 
 4. Customer Browsing/Watching Video Tutorials Dataflow Diagram
 ![Customer Browsing/Watching Video Tutorials Dataflow Diagram](./docs/customer-tutorials-dataflow.png)  
 
-### Customer Browsing Video Tutorials Dataflow Diagram - Explained  
+### Customer Browsing/Watching Video Tutorials Dataflow Diagram - Explained  
 
 - Customer Navigates to the Tutorials Page  
-The Tutorials Controller receives the GET request and processes it. It calls the `getTutorials()` function, which is responsible for retrieving all stored video tutorials (URLs) from the database (Tutorials Collection).  
+When the customer visits the Tutorials page, the browser (client) automatically initiates a request to fetch available video tutorials. 
 
 - Customer Sends a GET Request  
-When the customer lands on the Tutorials page, the browser (client) automatically sends a GET request to retrieve the available video tutorials. This request is sent to the server via the API endpoint `/api/tutorials`. The request prompts the server to fetch and return the list of video tutorials (URLs) stored in the database.
+The browser sends a GET request to the server via the API endpoint `/api/tutorials`. This request prompts the server to retrieve and return a list of video tutorials (URLs) stored in the database.
 
 -  Tutorials Controller Receives the Request  
 The Tutorials Controller receives the GET request and processes it. It calls the `getTutorials()` function, which is responsible for retrieving the list of stored video tutorials from the database (Tutorials Collection).
@@ -187,7 +187,7 @@ The `getTutorials()` function queries the database (Tutorials Collection) to ret
 - Database (Tutorials Collection) Returns Data  
 The database processes the query and responds with a JSON array containing the list of video tutorials, including their titles and YouTube URLs. If an error occurs (eg; a failed database connection), an error response is sent back to the controller instead.
 
-- Tutorials Controller Sends a Response to the Client 
+- Tutorials Controller Sends a Response to the Client   
 If the request is successful, the Tutorials Controller formats the retrieved data using express.json() and sends it to the client with a 200 OK status code. The frontend uses the returned video URLs to embed the videos using iframes, allowing customers to watch them directly on the website. If the query fails due to a database issue, the Tutorials Controller returns a 500 Internal Server Error response, and the website displays an error message, informing the user (customer) that the videos could not be retrieved.  
 
 - Customer Selects and Watches a Video  
@@ -210,10 +210,10 @@ The Order Controller receives the POST request and begins processing the order. 
 - Order Controller Creates the Order  
 If the request is valid, the Order Controller calls the `createOrder()` function, which generates a new order record in the database (Orders Collection). The order record includes the customer's name, shipping details, a list of ordered products with their quantities and prices, the total order price, and a unique order number.
 
-- Database Returns Data to the Order Controller
+- Database Returns Data to the Order Controller  
 The database (Orders Collection) processes the request and stores the new order. If the order creation is successful, the database confirms the order has been stored and returns a success message along with the newly generated order number. If there is a database error, an error message will be returned instead.
 
-- Order Controller Sends a Response to the Client 
+- Order Controller Sends a Response to the Client   
 If the order is successfully created, the Order Controller sends a response with a 201 Created status. The response includes a confirmation message informing the customer that their order was successful, along with the order number and shipping details. The checkout page updates to display this confirmation. If an error occurs at any stage, the Order Controller sends a 400 Bad Request response with an error message, and the checkout page informs the customer that the order could not be processed.
 
 
@@ -245,7 +245,7 @@ USER STORIES FOR CUSTOMERS
 2. Viewing Pages:
   - As a customer, I want to view an "About" page with photos, videos, and details about the business owner, so I can learn more about the person behind the brand, their new product lines, events, and touring information.
   - As a customer, I want to view a contact page with the business owner’s details, so I can reach out with questions regarding my orders, face painting tips and guidance, or face painting service booking requests and masterclasses.
-  - As a customer, I want to view the tutorials page with a variety of videos, so I can learn how to use the kits on offer, pick up any face painting tips.
+  - As a customer, I want to view the tutorials page with a variety of videos, so I can learn how to use the kits on offer, and pick up any face painting tips.
   - As a customer, I want to see detailed descriptions of what each face paint kit is used for, so I can make a more informed decision about choosing which kit is right for me.
   - As a customer, I want to easily access links to the business owner’s social media pages, such as YouTube, TikTok, Facebook, and Instagram, so I can see more seller content and tutorials about the paints on offer and how to use them.
 
@@ -367,12 +367,13 @@ USER STORIES FOR BUSINESS OWNER
 - As a customer-focused entrepreneur, I want to ensure my website includes clear and accessible contact information so that customers can easily inquire about orders, bookings, and masterclasses. 
 - As a mentor, I want to help aspiring face painters by offering product kits that simplify the buying process so that they don’t feel overwhelmed when choosing supplies. 
 - As a content creator, I want to maintain an active and engaging social media presence so that customers stay updated on new product releases and tutorials.  
-- As a professional in the industry, I want to continue attending conventions and masterclasses so that I stay ahead of industry trends and bring new innovations to my new product releases.
+- As a professional in the industry, I want to continue attending conventions and masterclasses so that I stay ahead of industry trends and bring new innovations to my new product releases.  
+- As a business owner, I want to use the website as a platform to showcase my expertise and sell my own designed face and body paint products, so that I can promote my unique product lines, enhance my brand presence in the face and body paint industry, and integrate my social media accounts to expand my reach.
   
 
 ## R5. Wireframes for multiple standard screen sizes, created using industry standard software  
 
-### All wireframes for the website pages will be fully responsive across all devices, using Tailwind CSS breakpoint sizes: lg (1024px for desktop), md (768px for tablet), and sm (640px for mobile). This responsiveness is illustrated in the wireframe screenshots below.
+#### All wireframes for the website pages will be fully responsive across all devices, using Tailwind CSS breakpoint sizes: lg (1024px for desktop), md (768px for tablet), and sm (640px for mobile). This responsiveness is illustrated in the wireframe screenshots below.
 
 1. Home Page  
 ![Home Page](./docs/home-page-wireframes.png)
@@ -417,7 +418,7 @@ USER STORIES FOR BUSINESS OWNER
 ![Website Flow Diagram](./docs/website-flow.png)  
 
 ### Website Flow Diagram Explained  
-For a customer navigating the website, the **Home** or landing page provides direct access to all pages and external seller's social media sites via the navbar and call-to-action buttons, except for the **Checkout** page. A single product or kit can be viewed by first navigating to the **Shop** page, and then selecting an individual item. Once on the product page (**Single Item**), the customer can still access all pages and external seller social media sites, again, except for **Checkout**. The **Cart** icon is displayed in the navbar on all pages except the **Checkout** page, which can only be accessed directly from the **Cart**. After an order is successfully submitted, the customer is only able to navigate back to the **Home** page.
+For a customer navigating the website, the **Home** or landing page provides direct access to all pages and external seller's social media sites via the navbar and call-to-action buttons, except for the **Checkout** page. A single product or kit can be viewed by first navigating to the **Shop** page, and then selecting an individual item. When navigating to the **Tutorials** page, a customer can view and watch embedded YouTube tutorial videos, which are streamed directly from YouTube on the same page. Once on the product page (**Single Item**), the customer can still access all pages and external seller social media sites, again, except for **Checkout**. The **Cart** icon is displayed in the navbar on all pages except the **Checkout** page, which can only be accessed directly from the **Cart**. After an order is successfully submitted, the customer is only able to navigate back to the **Home** page.
 
 For the business owner or seller, navigation to admin-only pages begins at the **Login** page. Upon successful login, the seller is redirected to the **Orders** page, where all customer orders are listed. Clicking on an order number allows the seller to view detailed order information (**Single Order**), including the product overview and customer shipping details. The seller can only navigate back to the **Orders** list page and has the option to logout from there. 
 
