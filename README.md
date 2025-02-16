@@ -38,41 +38,41 @@
   1. Professional Face Painters  
   The website targets experienced face and body paint artists who require high-quality products for their work. It offers complete kits with all the essential products needed to create a variety of professional designs for different events. These artists may also be interested in tutorial videos to learn new face paint designs and gather ideas for creating new unique looks, as well as staying up to date with new paint releases from Leanne's Collection.
 
-  1. Beginners & Hobbyists   
+  2. Beginners & Hobbyists   
   The website would also target individuals exploring face painting as a hobby or potential career move. Beginners would highly benefit from purchasing a complete kit, eliminating all the guesswork of selecting individual products while being a more cost-effective option. Additionally, the detailed product descriptions and video tutorials would help them understand the kit’s capabilities and the range of designs they can create, guiding them toward a more informed purchase decision.
 
-  1. Parents & Guardians  
+  3. Parents & Guardians  
   The website would also target parents and caregivers looking for simple, safe, and easy-to-use kits to create fun face paint designs for their children at home, or for their kids birthday parties. They too would also greatly benefit from the detailed product descriptions, and engaging video tutorial videos.
 
-  1. Schools & Childcare Centres
+  4. Schools & Childcare Centres
   The website would also target schools and childcare centres that require face painting kits for themed events, plays, school fairs, or simply fun activities to entertain children. These organisations would benefit from well-organised kits that include all necessary supplies, catering to different themes and occasions (eg; easter, christmas or halloween). Schools may also seek larger kits with increased quantities of paint and supplies, offering a wider variety of options to accommodate larger groups and events.
 
-  1. Aspiring Entrepreneurs  
+  5. Aspiring Entrepreneurs  
   The website would also target people looking to start their own face painting business. For example, many university students or stay-at-home parents may seek more flexible work opportunities that would fit around their children or school commitments. The website would help provide a great starting point for launching a face painting business by offering access to comprehensive kits with all the professional products needed. They could also benefit from the sellers expert guidance on product selection, tutorial videos, and links to the seller's social media, helping them learn more about face painting trends and industry practices.
 
-  1. Social Media Influencers 
+  6. Social Media Influencers 
   The website would also target social media influencers who create content around face and body painting. The seller would largely benefit from influencers showcasing their exclusive line of paints and new releases, helping to increase brand awareness in the industry. By using and reviewing these high-quality products, influencers can generate excitement among their followers, driving interest and sales. Additionally, links to the seller's social media allow influencers to stay updated on new product launches and industry trends, further amplifying the brand's reach.
 
 - TECH STACK  
   1. Frontend: React.js  
   The frontend will be built using React.js to provide a dynamic and responsive user interface. React Context API will manage global state, while Fetch API will handle API requests, with Axios as a potential alternative for improved request handling. React Toastify will be integrated to display notifications, while styling will be managed using Tailwind CSS, possibly Material Tailwind, and CSS, to create a visually appealing and striking design.
 
-  1. Backend: Node.js & Express.js  
+  2. Backend: Node.js & Express.js  
   The backend will be developed using Node.js and Express.js, with Node providing the runtime environment for executing backend logic and managing dependencies using npm. The Express.js framework will handle HTTP requests, define API routes, manage middleware, and interact with the database.
 
-  1.  Database: MongoDB & Mongoose    
+  3.  Database: MongoDB & Mongoose    
   The database will use MongoDB, a NoSQL database, along with Mongoose to define schemas (ODM) for storing all necessary data related to products, orders, video tutorials and admin authentication. MongoDB Atlas will be used for cloud-based database hosting, with AWS as the chosen cloud provider, ensuring site security, scalability when needed, and easy accessibility.
 
-  1. Development & Deployment  
+  4. Development & Deployment  
   The development environment will be managed using VS Code as the text editor. Git & GitHub will be used for version control, allowing feature branching and efficient tracking of changes. For deployment, the frontend will be hosted on Netlify, while the backend will be deployed on Render, which provides the necessary server for running the backend (business logic).
 
-  1. Security & Authentication  
+  5. Security & Authentication  
   The backend will implement security measures using bcrypt, JWT, CORS, and admin authentication. Bcrypt will be used to securely hash and verify the admins (seller's) password before storing it in the database. JWT will handle authentication by generating tokens to verify the admin, manage their session, and restrict access to protected routes. Customers will not need authentication, as they will shop and checkout as guests without requiring an account. CORS will be set up to allow the frontend (on Netlify) to communicate securely with the backend (on Render). This prevents the browser from blocking requests and ensures only the approved website can access the API.
 
-  1. Icons & UI/UX Design  
+  6. Icons & UI/UX Design  
   The website's design will be planned using Figma, ensuring a well-structured UI before development begins. Icons, such as those for social media links, will be sourced from Font Awesome, Heroicons, and Google Material Icons, as they are free and do not require attribution. A favicon will be generated using Favicon.io to represent the site's brand logo, enhancing brand identity.
 
-  1. E-Commerce & Payment Handling  
+  7. E-Commerce & Payment Handling  
   For the assignment submission, proxies will be created to simulate cart creation, checkout, and payment functionality. Once the site goes live (after assignment submission/marking), the Shopify Admin API will be integrated to handle real eCommerce transactions, including cart creation, checkout, and payment processing.
 
 ## R2. Dataflow Diagram
@@ -118,7 +118,7 @@ Once the browser receives the product data, it dynamically updates the Shop Page
 - Error Handling in Product Retrieval  
 If an error occurs during the request (eg; an invalid product ID or database connection failure), the Product Controller catches the error and sends an error response back to the client. This response typically includes a 500 Internal Server Error status along with an error message. The frontend then displays an error message to the customer, informing them that the product data could not be retrieved.  
 
-1. Seller Login Dataflow Diagram  
+2. Seller Login Dataflow Diagram  
 ![Seller Login Dataflow Diagram](./docs/seller-login-dataflow.png)  
 
 ### Seller Login Dataflow Diagram - Explained  
@@ -144,7 +144,7 @@ The Seller Controller generates a JSON Web Token (JWT) using the seller’s ID a
 - Seller Controller Sends a Response to the Client 
 If the login is successful, the Seller Controller sends back a JWT token along with a 200 OK status, enabling the seller to access the admin dashboard. The frontend then stores the token and redirects the seller to their dashboard. If the login attempt fails due to incorrect credentials, the Seller Controller sends a 401 Unauthorised response, and the frontend displays an error message to the user (Seller) informing them of the failed login attempt.     
 
-1. Seller Viewing Orders Dataflow Diagram  
+3. Seller Viewing Orders Dataflow Diagram  
 ![Seller Viewing Orders Dataflow Diagram](./docs/seller-orders-dataflow.png)  
 
 ### Seller Viewing Orders Dataflow Diagram - Explained  
@@ -167,7 +167,7 @@ The database processes the request and sends back the relevant data to the Order
 - Seller Controller Sends a Response to the Client 
 If the request is successful, the Order Controller formats the retrieved order data using express.json() and sends it back to the client with a 200 OK status. The response contains either a list of all orders or a detailed view of a specific order. If the request fails due to a database error or invalid query, the Order Controller returns a 500 Internal Server Error, and the frontend displays an error message to the user (Seller), informing them that the order data could not be retrieved. 
 
-1. Customer Browsing/Watching Video Tutorials Dataflow Diagram
+4. Customer Browsing/Watching Video Tutorials Dataflow Diagram
 ![Customer Browsing/Watching Video Tutorials Dataflow Diagram](./docs/customer-tutorials-dataflow.png)  
 
 ### Customer Browsing Video Tutorials Dataflow Diagram - Explained  
@@ -193,7 +193,7 @@ If the request is successful, the Tutorials Controller formats the retrieved dat
 - Customer Selects and Watches a Video  
 Once the video tutorials are displayed, the customer can click on a video to watch it. The browser fetches the video from YouTube via its URL, and YouTube streams the video directly to the client. If the video cannot load, an error message is displayed, preventing the video from being played.
 
-1. Customer Updating Cart & Checking Out Order Dataflow Diagram
+5. Customer Updating Cart & Checking Out Order Dataflow Diagram
 ![Customer Updating & Checking Out Order Dataflow Diagram](./docs/customer-checkout-dataflow.png)  
 
 ### Customer Updating Cart & Checking Out Order Dataflow Diagram - Explained  
@@ -233,65 +233,7 @@ The database (data tier) will be powered by MongoDB Atlas (hosted on AWS), stori
 
 ## R4. User Stories
 
-### **Initial User Stories**
-
-USER STORIES FOR CUSTOMERS  
-1. Shopping:  
-  - As a customer, I want to look at the different kits, so I can decide what to buy.
-  - As a customer, I want to add kits to my cart, so I can buy them later.
-  - As a customer, I want to remove things from my cart, so I only purchase those things I want.
-  - As a customer, I want to checkout without a guest, so I can make purchases quickly.
-
-2. Viewing Pages:
-  - As a customer, I want to read about the seller, so I know who I am buying from.
-  - As a customer, I want to contact the seller, so I am able to ask any questions.
-  - As a customer, I want to watch videos, so I can learn how to use the face painting products in kits.
-  - As a customer, I want to read about the kits on offer, so I know which one I should buy.
-  - As a customer, I want to find the seller’s social media, so I can follow them.
-
-USER STORIES FOR BUSINESS OWNER 
-1. Managing Orders:
-  - As a business owner, I want to log in to my admin portal, so I can access customer orders.
-  - As a business owner, I want to view all orders, so I can track purchases.
-  - As a business owner, I want to view an individual order, so I can see order details.
-  - As a business owner, I want to mark an order as fulfilled or unfulfilled, so I can track order completion.
-
-2. Displaying Products for Customers:
-  - I want my products to be displayed, so customers can browse and buy them.
-  - As a business owner, I want product listings to show images, descriptions, and prices, so customers have all the necessary details.
-
-3. Providing Video Tutorials for Customers:
-  - As a business owner, I want video tutorials on my website, so customers can learn how to use the products.
-  - As a business owner, I want videos to be embedded from YouTube, so customers can watch video's from my Youtube channel.
-
-4. Seller Information & Socials for Customers:
-  - As a business owner, I want an "About" page, so customers can learn who I am.
-  - As a business owner, I want my social media links displayed, so customers can follow my content.
-  - As a business owner, I want my contact details available, so customers can reach me for orders, bookings, and masterclasses.
-
-### **Personas**
-1. Professional Persona
-![Professional Persona](./docs/professional-persona.png)  
-
-2. Beginner & Hobbyist Persona
-![Beginner Persona](./docs/beginner-persona.png)  
-
-3. Parent/Guardian Persona
-![Parent Persona](./docs/parent-persona.png)  
-
-4. School Teacher Persona
-![Teacher Persona](./docs/teacher-persona.png) 
-
-5. Aspirational Entrepreneur Persona
-![Entrepreneur Persona](./docs/entrepreneur-persona.png)
-
-6. Social Media Face Paint Influencer Persona
-![Influencer Persona](./docs/influencer-persona.png)
-
-7. Business Owner Persona
-![Owner Persona](./docs/owner-persona.png)
-
-### **Revised User Stories**
+### **Initial User Stories**  
 
 USER STORIES FOR CUSTOMERS  
 1. Shopping:  
@@ -332,9 +274,105 @@ USER STORIES FOR BUSINESS OWNER
   - As a business owner, I want my social media links: YouTube, Instagram, TikTok, Facebook to be displayed on my website, so customers can easily follow my content, and learn more about me.
   - As a business owner, I want my contact details like email, phone, and business enquiries available available from all pages, so customers can reach me about orders, face paint bookings, and masterclasses.
   - As a business owner, I want my social media links to also appear in the website footer, so customers can access them from any page.
+
+
+### **Personas & Revised User Stories**
+1. Professional Persona
+![Professional Persona](./docs/professional-persona.png)  
+
+### Professional Persona User Stories  
+- As a professional face painter, I want to purchase complete face paint kits with high-quality, FDA-approved products  so that I can ensure safety and professional results for my clients.  
+- As a returning customer, I want to easily find and buy kits suited for different event types such as: festivals, parties, corporate events so that I have the right products for any occasion.  
+- As a professional face paint artist, I want to stay updated on new product releases, and trending designs so that I can keep my work fresh and relevant in the industry.  
+- As a face painter always looking to improve my skills, I want to watch tutorial videos that demonstrate new techniques, and paint styles so that I can continue learning and honing my craft.
+- As a busy professional, I want to find all essential face painting supplies in one place so that I don’t have to purchase items separately from multiple sources.
+- As a cost-conscious business owner too, I want to purchase high-quality yet affordable face paints and brushes so that I can maintain my profit margins without compromising on quality.  
+- As an artist engaged with the wider face painting community, I want to connect with other professionals through social media links on the website so that I can exchange ideas, get feedback, and stay connected with industry trends.  
+- As a customer, I want to have a quick and easy checkout process so that I can quickly complete my purchase and receive my products without hassle.
+
+2. Beginner & Hobbyist Persona
+![Beginner Persona](./docs/beginner-persona.png)  
+
+### Beginner & Hobbyist Persona User Stories  
+-  As a beginner in face painting, I want to purchase a complete, beginner-friendly kit that includes all essential tools (brushes, sponges, stencils, and paints) so that I don’t feel overwhelmed by choosing individual products.  
+-  As a student on a budget, I want to find cost-effective kits that still provide quality paint and tools that I can use to practice face painting without having to overspend.  
+-  As someone new to face painting, I want to watch tutorial videos that explain basic and intermediate techniques so that I can build confidence, and improve my skills.  
+-  As a face paint hobbyist, I want to understand what designs and styles I can create with each kit so that I know which one best suits my needs and present skill level.  
+-  As a new customer, I want to browse through different kit options without confusion so that I can make an informed choice based on my experience level, and feel confident in my purchase decision.
+-  As an aspiring part-time painter, I want to build confidence in my skills by learning from tutorials, and practicing with the right products so that I can eventually offer my services at events like kids' parties. 
+-  As a new customer, I want to easily browse through different kit options without confusion, so that I can make an informed choice based on my experience level.  
+-  As someone learning from online artists, I want to easily access links to the seller’s social media pages (YouTube, Instagram, TikTok, & FaceBook) so that I can find more tutorials, and design inspiration.  
+
+3. Parent/Guardian Persona
+![Parent Persona](./docs/parent-persona.png)  
+
+### Parent/Guardian Persona User Stories  
+- As a parent, I want to find an all-in-one face painting kit that is safe, easy to use, and budget-friendly so that I can create fun and memorable experiences for my kids without overspending.  
+- As a caregiver, I want to purchase skin-safe, FDA-approved face paint products, so that I can be confident that they likely won't cause irritation or allergic reactions on my children’s skin.  
+- As someone with no prior face painting experience, I want to watch simple step-by-step tutorials so that I can learn how to create basic designs for my kids at home.  
+- As a busy parent, I want to be able to quickly find the right kit without having to research individual products, so that I don’t waste time trying to figure out what I really need or want.  
+- As someone who wants convenience, I want to read clear product descriptions that list all included items and their uses so that I can easily decide which kit is best for me.  
+- As someone concerned about mess, I want to buy water-washable, easy-to-clean face paints so that they won’t stain furniture or be difficult to remove after playtime with my kids.  
+- As a parent who organises activities, I want to use face painting to make birthdays and holidays more fun, so that I can create special moments for my kids and their friends.  
+- As a parent who values community advice, I want to read recommendations from other parents and caregivers so that I can feel reassured that I’m making the best choice for my children. 
+
+4. School Teacher Persona
+![Teacher Persona](./docs/teacher-persona.png)  
+
+### School Teacher Persona User Stories  
+- As a primary school teacher, I want to find a cost-effective, all-in-one face paint kit, so that I can create simple and engaging designs for school plays, performances, and events within a limited school budget.  
+- As someone with little face painting experience, I want to access beginner-friendly designs and tutorials, so that I can quickly and confidently apply face paint to students without needing more advanced skills.  
+- As an event organiser who is responsible minor school children, I want to ensure that all paints I use are non-toxic, hypoallergenic, and safe for children’s skin so that I can try to avoid skin irritations or allergies affecting my students.  
+- As a teacher with limited time, I want to use face paints that are easy to apply and dry quickly, so that I can paint multiple children efficiently before an event starts.  
+- As a teacher concerned about mess, I want to use water-washable and easy-to-clean face paints so that I don’t have to worry about stains on school uniforms, props, or any other school property.  
+- As someone new to face painting, I want to watch simple, step-by-step video tutorials on how to create easy designs so that I can confidently apply paint for school performances without too much effort.
+- As a busy teacher, I want to order face painting kits online with fast delivery timelines so that I can receive the products well before an upcoming school event.  
+- As a teacher looking for recommendations, I want to connect with other educators in school forums and Facebook groups so that I can get advice on the best face painting products for school events.  
+
+
+5. Aspirational Entrepreneur Persona
+![Entrepreneur Persona](./docs/entrepreneur-persona.png)  
+
+### Aspirational Entrepreneur User Stories  
+- As an aspiring entrepreneur, I want to launch a full-time face painting business that provides a stable income while allowing me to work around my family commitments, so that I can have financial independence and flexibility.  
+- As someone new to the industry, I want to invest in a complete professional-grade face painting kit so that I have all the essential tools to create high-quality face painting designs for my future clients.  
+- As a beginner, I want to access detailed tutorials from expert face and body artists so that I can learn professional techniques and improve my painting skills.  
+- As someone unfamiliar with the market, I want to understand which products and tools are necessary to start a professional face painting business so that I can make informed purchasing decisions.  
+- As someone starting a business, I want to connect with other professional face painters in online communities so that I can gain insights, receive advice, and learn best practices for running a successful business.
+- As someone entering a competitive field, I want to be able to stay updated on industry trends, best practices, and get business tips from professionals so that I can establish myself as a trusted and skilled face painter in the marketplace.  
+- As a small business owner, I want to learn marketing strategies, especially how to attract clients through social media so that I can build a strong online presence and grow my business.
+- As a parent balancing work and family, I want to have access to an easy-to-use face paint website that allows me to find and purchase everything I need in one place, so that I can quickly and efficiently set up, and continue my business without hassle.
+
+6. Social Media Face Paint Influencer Persona
+![Influencer Persona](./docs/influencer-persona.png)  
+
+### Social Media Face Paint Influencer User Stories  
+- As a social media influencer, I want to discover and showcase high-quality, professional-grade face paints so that I can create engaging content while maintaining my credibility in the industry.  
+- As a content creator, I want to produce creative and visually stunning face paint tutorials, reviews, and demonstrations so that I can attract and retain my audience on Instagram, TikTok, and YouTube.  
+- As an industry trendsetter, I want to stay updated on the latest face paint products, techniques, and trends so that I can remain relevant and ahead of my competition.  
+- As a brand partner, I want to collaborate with trusted face paint companies so that I can secure sponsorships and exclusive promotions that align with my artistic style.  
+- As a professional in the industry, I want to access innovative, unique face paint products so that I can create designs that set my work apart from others.  
+- As a trusted influencer, I want to verify that the brands I promote are fresh, innovative, high-quality & FDA- approved, so that I can continue building credibility with my audience.  
+- As a social media personality, I want to engage with my audience through tutorials, product unboxings, and trend-based videos so that I can grow my following and increase my engagement rates.  
+- As an industry expert, I want to connect with other face and body painting professionals and communities so that I can exchange knowledge, collaborate, and expand my influence.  
+
+7. Business Owner Persona
+![Owner Persona](./docs/owner-persona.png)  
+
+### Business Owner User Stories  
+- As a business owner, I want to sell my own branded face paint products in kit bundles, through a dedicated website so that customers can easily find and purchase my own products, and the right kit for their needs.  
+- As a product creator, I want to expand my product range with new face paint kits tailored to different demographics so that both beginners and professionals can find suitable products.  
+- As an educator, I want to provide customers with video tutorials demonstrating how to use my products so that they can make more informed purchasing decisions and improve their skills.  
+- As a seller, I want to provide detailed product descriptions that include all essential product information so that customers can confidently select the best kit for their needs.  
+- As a customer-focused entrepreneur, I want to ensure my website includes clear and accessible contact information so that customers can easily inquire about orders, bookings, and masterclasses. 
+- As a mentor, I want to help aspiring face painters by offering product kits that simplify the buying process so that they don’t feel overwhelmed when choosing supplies. 
+- As a content creator, I want to maintain an active and engaging social media presence so that customers stay updated on new product releases and tutorials.  
+- As a professional in the industry, I want to continue attending conventions and masterclasses so that I stay ahead of industry trends and bring new innovations to my new product releases.
   
 
-## R5. Wireframes for multiple standard screen sizes, created using industry standard software
+## R5. Wireframes for multiple standard screen sizes, created using industry standard software  
+
+### All wireframes for the website pages will be fully responsive across all devices, using Tailwind CSS breakpoint sizes: lg (1024px for desktop), md (768px for tablet), and sm (640px for mobile). This responsiveness is illustrated in the wireframe screenshots below.
 
 1. Home Page  
 ![Home Page](./docs/home-page-wireframes.png)
@@ -373,7 +411,15 @@ USER STORIES FOR BUSINESS OWNER
 ![Style Guide 1](./docs/style-guide-one.png)  
 ![Style Guide 2](./docs/style-guide-two.png)  
 ![Style Guide 3](./docs/style-guide-three.png)  
-![Style Guide 4](./docs/style-guide-four.png)
+![Style Guide 4](./docs/style-guide-four.png)  
+
+13. Website Flow Diagram  
+![Website Flow Diagram](./docs/website-flow.png)  
+
+### Website Flow Diagram Explained  
+For a customer navigating the website, the **Home** or landing page provides direct access to all pages and external seller's social media sites via the navbar and call-to-action buttons, except for the **Checkout** page. A single product or kit can be viewed by first navigating to the **Shop** page, and then selecting an individual item. Once on the product page (**Single Item**), the customer can still access all pages and external seller social media sites, again, except for **Checkout**. The **Cart** icon is displayed in the navbar on all pages except the **Checkout** page, which can only be accessed directly from the **Cart**. After an order is successfully submitted, the customer is only able to navigate back to the **Home** page.
+
+For the business owner or seller, navigation to admin-only pages begins at the **Login** page. Upon successful login, the seller is redirected to the **Orders** page, where all customer orders are listed. Clicking on an order number allows the seller to view detailed order information (**Single Order**), including the product overview and customer shipping details. The seller can only navigate back to the **Orders** list page and has the option to logout from there. 
 
 ## R6. Screenshots of your Trello (or similar kanban system) board throughout the duration of the project
 
